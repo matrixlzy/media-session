@@ -1,12 +1,10 @@
-media_session_sources = []
-if get_option('session-managers').contains('media-session')
-  sm_logind_src = []
-  sm_logind_dep = []
-  if systemd.found() and systemd_dep.found()
-    sm_logind_src = ['logind.c']
-    sm_logind_dep = [systemd_dep]
-  endif
-  media_session_sources += [
+sm_logind_src = []
+sm_logind_dep = []
+if systemd.found() and systemd_dep.found()
+  sm_logind_src = ['logind.c']
+  sm_logind_dep = [systemd_dep]
+endif
+media_session_sources = [
     'access-flatpak.c',
     'access-portal.c',
     'alsa-no-dsp.c',
@@ -33,10 +31,10 @@ if get_option('session-managers').contains('media-session')
     'libcamera-monitor.c',
     'suspend-node.c',
   ] + sm_logind_src
-  pipewire_media_session = executable('pipewire-media-session',
-    media_session_sources,
-    install: true,
-    dependencies : [dbus_dep, pipewire_dep, alsa_dep, mathlib, sm_logind_dep, libinotify_dep],
-  )
-  subdir('media-session.d')
-endif
+pipewire_media_session = executable('pipewire-media-session',
+  media_session_sources,
+  include_directories: [configinc],
+  install: true,
+  dependencies : [dbus_dep, pipewire_dep, alsa_dep, mathlib, sm_logind_dep, libinotify_dep],
+)
+subdir('media-session.d')
