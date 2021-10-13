@@ -193,10 +193,6 @@ else
   makedata.set('TAG', media_session_version)
 endif
 
-configure_file(input : 'Makefile.in',
-  output : 'Makefile',
-  configuration : makedata)
-
 # Find dependencies
 mathlib = cc.find_library('m', required : false)
 rt_lib = cc.find_library('rt', required : false) # clock_gettime
