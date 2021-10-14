@@ -226,6 +226,7 @@ alsa_dep = dependency('alsa', version : '>=1.1.7')
 
 subdir('po')
 subdir('src')
+subdir('tools')
 subdir('media-session.d')
 if systemd.found()
   subdir('systemd')
