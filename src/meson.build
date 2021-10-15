@@ -1,16 +1,39 @@
-
-subdir('pipewire')
-subdir('media-session')
-subdir('daemon')
-subdir('tools')
-subdir('modules')
-if not get_option('examples').disabled()
-  subdir('examples')
+sm_logind_src = []
+sm_logind_dep = []
+if systemd.found() and systemd_dep.found()
+  sm_logind_src = ['logind.c']
+  sm_logind_dep = [systemd_dep]
 endif
-if not get_option('tests').disabled()
-  subdir('tests')
-endif
-
-if gst_dep.length() != 0
-  subdir('gst')
-endif
+media_session_sources = [
+    'access-flatpak.c',
+    'access-portal.c',
+    'alsa-no-dsp.c',
+    'alsa-midi.c',
+    'alsa-monitor.c',
+    'alsa-endpoint.c',
+    'bluez-monitor.c',
+    'bluez-endpoint.c',
+    'bluez-autoswitch.c',
+    'default-nodes.c',
+    'default-profile.c',
+    'default-routes.c',
+    'media-session.c',
+    'session-manager.c',
+    'match-rules.c',
+    'metadata.c',
+    'stream-endpoint.c',
+    'restore-stream.c',
+    'policy-ep.c',
+    'policy-node.c',
+    'streams-follow-default.c',
+    'v4l2-monitor.c',
+    'v4l2-endpoint.c',
+    'libcamera-monitor.c',
+    'suspend-node.c',
+  ] + sm_logind_src
+pipewire_media_session = executable('pipewire-media-session',
+  media_session_sources,
+  include_directories: [configinc],
+  install: true,
+  dependencies : [dbus_dep, pipewire_dep, alsa_dep, mathlib, sm_logind_dep, libinotify_dep],
+)
