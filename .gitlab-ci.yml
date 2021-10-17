@@ -222,6 +222,7 @@ build_with_coverity:
       - build-*/meson-logs
       - cov-int/build-log.txt
 
+spellcheck:
   extends:
     - .build_on_fedora
   stage: analysis
