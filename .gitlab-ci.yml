@@ -222,6 +222,18 @@ build_with_coverity:
       - build-*/meson-logs
       - cov-int/build-log.txt
 
+reserve.c sync:
+  extends:
+    - .build_on_fedora
+  stage: analysis
+  script:
+    - >-
+      curl https://gitlab.freedesktop.org/pipewire/pipewire/-/raw/master/src/tools/reserve.c > src/reserve.c
+    - >-
+      curl https://gitlab.freedesktop.org/pipewire/pipewire/-/raw/master/src/tools/reserve.h > src/reserve.h
+    - git diff --exit-code || echo "WARNING - reserve.{c|h} should be kept in sync with PipeWire" && exit 1
+  allow_failure: true
+
 spellcheck:
   extends:
     - .build_on_fedora
