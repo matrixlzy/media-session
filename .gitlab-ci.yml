@@ -229,6 +229,8 @@ spellcheck:
   script:
     - git ls-files | grep -v .gitlab-ci.yml | xargs -d '\n' sed -i 's/Pipewire/PipeWire/g'
     - git diff --exit-code || (echo "Please fix the above spelling mistakes" && exit 1)
+    - git ls-files | grep -v .gitlab-ci.yml | xargs -d '\n' sed -i 's/Media \?session/Media Session/g'
+    - git diff --exit-code || (echo "Please fix the above spelling mistakes" && exit 1)
 
 doccheck:
   extends:
