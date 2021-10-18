@@ -2368,9 +2368,10 @@ static int collect_modules(struct impl *impl, const char *str)
 	int count = 0;
 
 	dir = getenv("MEDIA_SESSION_CONFIG_DIR");
-	if (dir == NULL && (dir = getenv("PIPEWIRE_CONFIG_DIR")) == NULL) {
-		dir = MEDIA_SESSION_CONFDATADIR;
+	if (dir == NULL) {
 		prefix = SESSION_PREFIX;
+		if ((dir = getenv("PIPEWIRE_CONFIG_DIR")) == NULL)
+			dir = MEDIA_SESSION_CONFDATADIR;
 	}
 	if (dir == NULL)
 		return -ENOENT;
