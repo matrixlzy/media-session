@@ -1,4 +1,4 @@
-project('pipewire-media-session', ['c' ],
+project('media-session', ['c'],
   version : '0.3.38',
   license : [ 'MIT', 'LGPL-2.1-or-later', 'GPL-2.0-only' ],
   meson_version : '>= 0.54.0',
