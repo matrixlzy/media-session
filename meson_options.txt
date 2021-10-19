@@ -29,3 +29,8 @@ option('systemd-user-service',
 option('systemd-user-unit-dir',
        type : 'string',
        description : 'Directory for user systemd units (defaults to /usr/lib/systemd/user)')
+option('with-module-sets',
+	description : 'Extra modules sets to enable on install (see media-session.conf)',
+	type : 'array',
+	choices : ['alsa', 'jack', 'pulseaudio'],
+	value : ['jack', 'pulseaudio'])

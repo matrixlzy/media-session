@@ -7,9 +7,11 @@ conf_files = [
   [ 'v4l2-monitor.conf', 'v4l2-monitor.conf' ],
   [ 'media-session.conf', 'media-session.conf' ],
   [ 'alsa-monitor.conf', 'alsa-monitor.conf' ],
-  [ 'with-jack', 'with-jack' ],
-  [ 'with-pulseaudio', 'with-pulseaudio' ],
 ]
+
+foreach opt : get_option('with-module-sets')
+  conf_files += [ [ 'with-module-set.in', 'with-@0@'.format(opt) ] ]
+endforeach
 
 foreach c : conf_files
   configure_file(input : c.get(0),

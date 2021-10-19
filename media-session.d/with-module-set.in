@@ -1,0 +1,5 @@
+# This file is part of Media Session @VERSION@
+#
+# Add this file to @MEDIA_SESSION_CONFIG_DIR@/media-session.d/
+# to load the corresponding module list in the in the media-session.conf
+# session.modules[<filename>] array.
