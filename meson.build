@@ -73,39 +73,6 @@ cdata.set_quoted('PACKAGE_URL', '"https://pipewire.org"')
 cdata.set_quoted('PACKAGE_VERSION', media_session_version)
 cdata.set_quoted('PIPEWIRE_CONFIG_DIR', media_session_configdir)
 
-check_headers = [['dlfcn.h','HAVE_DLFCN_H'],
-  ['inttypes.h', 'HAVE_INTTYPES_H'],
-  ['memory.h', 'HAVE_MEMORY_H'],
-  ['poll.h', 'HAVE_POLL_H'],
-  ['stddef.h', 'HAVE_STDDEF_H'],
-  ['stdint.h', 'HAVE_STDINT_H'],
-  ['stdio_ext.h', 'HAVE_STDIO_EXT_H'],
-  ['strings.h', 'HAVE_STRINGS_H'],
-  ['string.h', 'HAVE_STRING_H'],
-  ['sys/mount.h', 'HAVE_SYS_MOUNT_H'],
-  ['sys/param.h', 'HAVE_SYS_PARAM_H'],
-  ['sys/poll.h', 'HAVE_SYS_POLL_H'],
-  ['sys/prctl.h', 'HAVE_SYS_PRCTL_H'],
-  ['sys/random.h', 'HAVE_SYS_RANDOM_H'],
-  ['sys/socket.h', 'HAVE_SYS_SOCKET_H'],
-  ['sys/stat.h', 'HAVE_SYS_STAT_H'],
-  ['sys/times.h', 'HAVE_SYS_TIMES_H'],
-  ['sys/time.h', 'HAVE_SYS_TIME_H'],
-  ['sys/types.h', 'HAVE_SYS_TYPES_H'],
-  ['sys/utsname.h', 'HAVE_SYS_UTSNAME_H'],
-  ['sys/vfs.h', 'HAVE_SYS_VFS_H'],
-  ['sys/wait.h', 'HAVE_SYS_WAIT_H'],
-  ['pwd.h', 'HAVE_PWD_H'],
-  ['ucontext.h', 'HAVE_UCONTEXT_H'],
-  ['unistd.h', 'HAVE_UNISTD_H'],
-]
-
-foreach h : check_headers
-  if cc.has_header(h.get(0))
-    cdata.set(h.get(1), 1)
-  endif
-endforeach
-
 pipewire_dep = dependency('libpipewire-0.3')
 
 systemd = dependency('systemd', required: get_option('systemd'))
