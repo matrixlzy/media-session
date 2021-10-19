@@ -134,7 +134,7 @@ if meson.version().version_compare('>=0.58.0')
   builddir = meson.current_build_dir()
   srcdir = meson.current_source_dir()
 
-  devenv.set('MEDIA_SESSION_CONFIG_DIR', builddir / 'src' / 'media-session' / 'media-session.d')
+  devenv.set('MEDIA_SESSION_CONFIG_DIR', builddir / 'media-session.d')
 
   devenv.set('PW_UNINSTALLED', '1')
 
