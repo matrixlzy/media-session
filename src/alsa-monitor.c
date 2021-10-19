@@ -55,6 +55,8 @@
 #include <pipewire/extensions/session-manager.h>
 
 #include "media-session.h"
+#include "reserve.h"
+
 
 /** \page page_media_session_module_alsa_monitor Media Session Module: ALSA Monitor
  *
@@ -124,8 +126,6 @@
 
 PW_LOG_TOPIC_STATIC(mod_topic, "ms.mod." NAME);
 #define PW_LOG_TOPIC_DEFAULT mod_topic
-
-#include "reserve.c"
 
 #define SESSION_CONF	"alsa-monitor.conf"
 

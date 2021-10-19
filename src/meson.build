@@ -25,6 +25,7 @@ media_session_sources = [
     'restore-stream.c',
     'policy-ep.c',
     'policy-node.c',
+    'reserve.c',
     'streams-follow-default.c',
     'v4l2-monitor.c',
     'v4l2-endpoint.c',
