@@ -19,8 +19,6 @@ else
   media_session_version_nano = 0
 endif
 
-pipewire_name = 'pipewire'
-
 prefix = get_option('prefix')
 media_session_bindir = prefix / get_option('bindir')
 media_session_datadir = prefix / get_option('datadir')
@@ -29,6 +27,7 @@ media_session_libexecdir = prefix / get_option('libexecdir')
 media_session_localedir = prefix / get_option('localedir')
 media_session_sysconfdir = prefix / get_option('sysconfdir')
 
+# For historical reasons, we drop our data into the pipewire directories
 media_session_configdir = media_session_sysconfdir / 'pipewire'
 media_session_confdatadir = media_session_datadir / 'pipewire'
 
@@ -61,14 +60,6 @@ cc_flags = common_flags + [
 ]
 add_project_arguments(cc.get_supported_arguments(cc_flags), language: 'c')
 
-have_cpp = add_languages('cpp', native: false, required : false)
-
-if have_cpp
-  cxx = meson.get_compiler('cpp')
-  cxx_flags = common_flags
-  add_project_arguments(cxx.get_supported_arguments(cxx_flags), language: 'cpp')
-endif
-
 cdata = configuration_data()
 cdata.set_quoted('MEDIA_SESSION_CONFDATADIR', media_session_confdatadir)
 cdata.set_quoted('LOCALEDIR', media_session_localedir)
@@ -81,12 +72,6 @@ cdata.set_quoted('PACKAGE_TARNAME', 'media-session')
 cdata.set_quoted('PACKAGE_URL', '"https://pipewire.org"')
 cdata.set_quoted('PACKAGE_VERSION', media_session_version)
 cdata.set_quoted('PIPEWIRE_CONFIG_DIR', media_session_configdir)
-# FIXME: --with-memory-alignment],[8,N,malloc,pagesize (default is 32)]) option
-cdata.set('MEMORY_ALIGNMENT_MALLOC', 1)
-
-if host_machine.endian() == 'big'
-  cdata.set('WORDS_BIGENDIAN', 1)
-endif
 
 check_headers = [['dlfcn.h','HAVE_DLFCN_H'],
   ['inttypes.h', 'HAVE_INTTYPES_H'],
@@ -121,55 +106,6 @@ foreach h : check_headers
   endif
 endforeach
 
-if cc.has_function('poll', prefix : '#include<poll.h>')
-  cdata.set('HAVE_POLL', 1)
-endif
-if cc.has_function('pselect', prefix : '#include<sys/select.h>')
-  cdata.set('HAVE_PSELECT', 1)
-endif
-cdata.set('HAVE_MMAP', 1)
-
-if cc.has_function('posix_memalign', prefix : '#include<stdlib.h>')
-  cdata.set('HAVE_POSIX_MEMALIGN', 1)
-endif
-if cc.has_function('getpagesize', prefix : '#include<unistd.h>')
-  cdata.set('HAVE_GETPAGESIZE', 1)
-endif
-if cc.has_function('gettid', prefix : '#include<unistd.h>', args: [ '-D_GNU_SOURCE' ])
-  cdata.set('HAVE_GETTID', 1)
-endif
-if cc.has_function('clock_gettime', prefix : '#include <time.h>')
-  cdata.set('HAVE_CLOCK_GETTIME', 1)
-endif
-
-if cc.has_type('ptrdiff_t', prefix : '#include <stddef.h>')
-  cdata.set('HAVE_PTRDIFF_T', 1)
-endif
-
-if cc.has_header_symbol('string.h', 'strndupa', args : [ '-D_GNU_SOURCE' ])
-  cdata.set('HAVE_STRNDUPA', 1)
-endif
-
-if cc.has_function('mkstemp', prefix : '#include <stdlib.h>')
-  cdata.set('HAVE_MKSTEMP', 1)
-endif
-
-if cc.has_function('memfd_create', prefix : '#include <sys/mman.h>', args : [ '-D_GNU_SOURCE' ])
-  cdata.set('HAVE_MEMFD_CREATE', 1)
-endif
-
-if cc.has_function('getrandom', prefix : '#include <stddef.h>\n#include <sys/random.h>', args : [ '-D_GNU_SOURCE' ])
-  cdata.set('HAVE_GETRANDOM', 1)
-endif
-
-if cc.has_function('sigabbrev_np', prefix : '#include <string.h>', args : [ '-D_GNU_SOURCE' ])
-  cdata.set('HAVE_SIGABBREV_NP', 1)
-endif
-
-if cc.get_define('SYS_pidfd_open', prefix : '#include <sys/syscall.h>') != ''
-  cdata.set('HAVE_PIDFD_OPEN', 1)
-endif
-
 pipewire_dep = dependency('libpipewire-0.3')
 
 systemd = dependency('systemd', required: get_option('systemd'))
@@ -181,17 +117,6 @@ if systemd.found() and systemd_dep.found()
 endif
 
 configinc = include_directories('.')
-pipewire_inc = include_directories('src')
-
-makedata = configuration_data()
-  makedata.set('BUILD_ROOT', meson.build_root())
-  makedata.set('SOURCE_ROOT', meson.source_root())
-  makedata.set('VERSION', media_session_version)
-if version_arr.length() == 4
-  makedata.set('TAG', 'HEAD')
-else
-  makedata.set('TAG', media_session_version)
-endif
 
 # Find dependencies
 mathlib = cc.find_library('m', required : false)
@@ -199,16 +124,6 @@ rt_lib = cc.find_library('rt', required : false) # clock_gettime
 dl_lib = cc.find_library('dl', required : false)
 pthread_lib = dependency('threads')
 dbus_dep = dependency('dbus-1')
-
-cap_lib = dependency('libcap', required : false)
-if cap_lib.found()
-  cdata.set('HAVE_LIBCAP', 1)
-endif
-
-# On FreeBSD, epoll-shim library is required for eventfd() and timerfd()
-epoll_shim_dep = (build_machine.system() == 'freebsd'
-    ? dependency('epoll-shim', required: true)
-    : dependency('', required: false))
 
 libinotify_dep = (build_machine.system() == 'freebsd'
     ? dependency('libinotify', required: true)
