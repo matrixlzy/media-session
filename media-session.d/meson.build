@@ -17,9 +17,3 @@ foreach c : conf_files
                  configuration : conf_config,
                  install_dir : media_session_confdatadir / 'media-session.d')
 endforeach
-
-install_data(
-  sources : [
-    'with-jack',
-    'with-pulseaudio' ],
-  install_dir : media_session_confdatadir / 'media-session.d')
