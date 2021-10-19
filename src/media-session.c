@@ -37,9 +37,6 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <sys/types.h>
-#if HAVE_PWD_H
-#include <pwd.h>
-#endif
 
 #include <spa/node/node.h>
 #include <spa/utils/hook.h>
