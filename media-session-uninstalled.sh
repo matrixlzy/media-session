@@ -9,7 +9,7 @@ if [ -z "@MESON@" ]; then
 	BUILDDIR="@MESON_BUILD_ROOT@"
 else
 	SOURCEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-	BUILDDIR=${SOURCEDIR}/builddir
+	BUILDDIR=$(find "${SOURCEDIR}" -maxdepth 2 -name build.ninja -printf "%h\n" -quit 2>/dev/null || echo "${SOURCEDIR}/builddir")
 fi
 
 while getopts ":b:v:" opt; do
