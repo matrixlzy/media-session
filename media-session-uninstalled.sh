@@ -2,7 +2,15 @@
 
 set -e
 
-SOURCEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# This is unset by meson
+# shellcheck disable=SC2157
+if [ -z "@MESON@" ]; then
+	SOURCEDIR="@MESON_SOURCE_ROOT@"
+	BUILDDIR="@MESON_BUILD_ROOT@"
+else
+	SOURCEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+	BUILDDIR=${SOURCEDIR}/builddir
+fi
 
 while getopts ":b:v:" opt; do
 	case ${opt} in
@@ -23,11 +31,6 @@ while getopts ":b:v:" opt; do
 			;;
 	esac
 done
-
-if [ -z "${BUILDDIR}" ]; then
-	BUILDDIR=${SOURCEDIR}/builddir
-	echo "Using default build directory: ${BUILDDIR}"
-fi
 
 if [ ! -d "${BUILDDIR}" ]; then
 	echo "Invalid build directory: ${BUILDDIR}"

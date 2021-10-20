@@ -121,9 +121,26 @@ if doxygen.found()
   subdir('doc')
 endif
 
-setenv = find_program('media-session-uninstalled.sh')
+conf_uninstalled = configuration_data()
+conf_uninstalled.set('MESON', '')
+conf_uninstalled.set('MESON_SOURCE_ROOT', meson.project_source_root())
+conf_uninstalled.set('MESON_BUILD_ROOT', meson.project_build_root())
+
+ms_uninstalled = configure_file(
+  input : 'media-session-uninstalled.sh',
+  output : 'media-session-uninstalled.sh.in',
+  configuration : conf_uninstalled,
+)
+
+media_session_uninstalled = custom_target('media-session-uninstalled',
+  output : 'media-session-uninstalled.sh',
+  input : ms_uninstalled,
+  build_by_default : true,
+  command : ['cp', '@INPUT@', '@OUTPUT@'],
+)
+
 run_target('media-session-uninstalled',
-           command : [setenv,
+           command : [media_session_uninstalled,
                       '-b@0@'.format(meson.project_build_root()),
                       '-v@0@'.format(media_session_version)]
 )
