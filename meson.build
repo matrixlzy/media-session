@@ -1,7 +1,7 @@
 project('media-session', ['c'],
   version : '0.3.38',
   license : [ 'MIT', 'LGPL-2.1-or-later', 'GPL-2.0-only' ],
-  meson_version : '>= 0.54.0',
+  meson_version : '>= 0.56.0',
   default_options : [ 'warning_level=3',
                       'c_std=gnu99',
                       'b_pie=true',
@@ -124,7 +124,7 @@ endif
 setenv = find_program('media-session-uninstalled.sh')
 run_target('media-session-uninstalled',
            command : [setenv,
-                      '-b@0@'.format(meson.build_root()),
+                      '-b@0@'.format(meson.project_build_root()),
                       '-v@0@'.format(media_session_version)]
 )
 

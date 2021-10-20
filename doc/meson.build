@@ -1,8 +1,8 @@
 doxyfile_conf = configuration_data()
 doxyfile_conf.set('PACKAGE_NAME', meson.project_name())
 doxyfile_conf.set('PACKAGE_VERSION', meson.project_version())
-doxyfile_conf.set('top_srcdir', meson.source_root())
-doxyfile_conf.set('top_builddir', meson.build_root())
+doxyfile_conf.set('top_srcdir', meson.project_source_root())
+doxyfile_conf.set('top_builddir', meson.project_build_root())
 
 dot_found = find_program('dot', required: false).found()
 summary({'dot (used with doxygen)': dot_found}, bool_yn: true, section: 'Optional programs')
@@ -20,27 +20,27 @@ extra_docs = [
 
 inputs = []
 foreach extra : extra_docs
-  inputs += meson.source_root() / 'doc' / extra
+  inputs += meson.project_source_root() / 'doc' / extra
 endforeach
 foreach h : media_session_sources
-  inputs += meson.source_root() / 'src' / h
+  inputs += meson.project_source_root() / 'src' / h
 endforeach
 
 path_prefixes = [
-  meson.source_root() / 'src',
-  meson.source_root(),
+  meson.project_source_root() / 'src',
+  meson.project_source_root(),
 ]
 
 cssfiles = [
-  meson.source_root() / 'doc' / 'doxygen-awesome.css',
-  meson.source_root() / 'doc' / 'custom.css'
+  meson.project_source_root() / 'doc' / 'doxygen-awesome.css',
+  meson.project_source_root() / 'doc' / 'custom.css'
 ]
 
 doxyfile_conf.set('inputs', ' '.join(inputs))
 doxyfile_conf.set('cssfiles', ' '.join(cssfiles))
 doxyfile_conf.set('path_prefixes', ' '.join(path_prefixes))
-doxyfile_conf.set('c_input_filter', meson.source_root() / 'doc' / 'input-filter.sh')
-doxyfile_conf.set('h_input_filter', meson.source_root() / 'doc' / 'input-filter-h.sh')
+doxyfile_conf.set('c_input_filter', meson.project_source_root() / 'doc' / 'input-filter.sh')
+doxyfile_conf.set('h_input_filter', meson.project_source_root() / 'doc' / 'input-filter-h.sh')
 
 doxyfile = configure_file(input: 'Doxyfile.in',
                           output: 'Doxyfile',
