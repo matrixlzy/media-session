@@ -32,6 +32,8 @@ while getopts ":b:v:" opt; do
 	esac
 done
 
+shift $((OPTIND-1))
+
 if [ ! -d "${BUILDDIR}" ]; then
 	echo "Invalid build directory: ${BUILDDIR}"
 	exit 1
@@ -44,5 +46,9 @@ export PATH="${BUILDDIR}/src:${PATH}"
 export PW_UNINSTALLED=1
 export PKG_CONFIG_PATH="${BUILDDIR}/meson-uninstalled/:${PKG_CONFIG_PATH}"
 
-# FIXME: find a nice, shell-neutral way to specify a prompt
-${SHELL}
+if [ -z "$1" ]; then
+	# FIXME: find a nice, shell-neutral way to specify a prompt
+	${SHELL}
+else
+	exec "$@"
+fi
