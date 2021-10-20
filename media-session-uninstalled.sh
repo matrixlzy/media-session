@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+SOURCEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 while getopts ":b:v:" opt; do
 	case ${opt} in
@@ -25,7 +25,7 @@ while getopts ":b:v:" opt; do
 done
 
 if [ -z "${BUILDDIR}" ]; then
-	BUILDDIR=${SCRIPT_DIR}/builddir
+	BUILDDIR=${SOURCEDIR}/builddir
 	echo "Using default build directory: ${BUILDDIR}"
 fi
 
