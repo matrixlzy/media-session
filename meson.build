@@ -9,15 +9,6 @@ project('media-session', ['c'],
                       'buildtype=debugoptimized' ])
 
 media_session_version = meson.project_version()
-version_arr = media_session_version.split('.')
-media_session_version_major = version_arr[0]
-media_session_version_minor = version_arr[1]
-media_session_version_micro = version_arr[2]
-if version_arr.length() == 4
-  media_session_version_nano = version_arr[3]
-else
-  media_session_version_nano = 0
-endif
 
 prefix = get_option('prefix')
 media_session_bindir = prefix / get_option('bindir')
