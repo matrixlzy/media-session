@@ -71,7 +71,6 @@ cdata.set_quoted('PACKAGE_STRING', 'media-session @0@'.format(media_session_vers
 cdata.set_quoted('PACKAGE_TARNAME', 'media-session')
 cdata.set_quoted('PACKAGE_URL', '"https://pipewire.org"')
 cdata.set_quoted('PACKAGE_VERSION', media_session_version)
-cdata.set_quoted('PIPEWIRE_CONFIG_DIR', media_session_configdir)
 
 pipewire_dep = dependency('libpipewire-0.3')
 
