@@ -1,5 +1,5 @@
 conf_config = configuration_data()
-conf_config.set('VERSION', '"@0@"'.format(media_session_version))
+conf_config.set('VERSION', '@0@'.format(media_session_version))
 conf_config.set('MEDIA_SESSION_CONFIG_DIR', media_session_configdir)
 
 conf_files = [
