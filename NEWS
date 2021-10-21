@@ -1,0 +1,12 @@
+# Media Session 0.4.0 (2021-10-21)
+
+This is the first standalone release of Media Session, previously part of the
+PipeWire repository. The binary name and service files remains unchanged as
+pipewire-media-session and pipewire-media-session.service.
+
+Media Session now suppports the MEDIA_SESSION_CONFIG_DIR environment variable
+as lookup location for configuration files. PIPEWIRE_CONFIG_DIR continues
+to be supported as before.
+
+The equivalent to pw-uninstalled.sh in this repository is
+media-session-uninstalled.sh.

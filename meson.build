@@ -1,5 +1,5 @@
 project('media-session', ['c'],
-  version : '0.3.38',
+  version : '0.4.0',
   license : [ 'MIT', 'LGPL-2.1-or-later', 'GPL-2.0-only' ],
   meson_version : '>= 0.56.0',
   default_options : [ 'warning_level=3',
