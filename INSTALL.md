@@ -17,7 +17,7 @@ $ meson setup builddir
 ```
 
 For distribution-specific build dependencies, please check our
-[CI pipeline](https://gitlab.freedesktop.org/pipewire/pipewire-media-session/-/blob/master/.gitlab-ci.yml)
+[CI pipeline](https://gitlab.freedesktop.org/pipewire/media-session/-/blob/master/.gitlab-ci.yml)
 (search for `FDO_DISTRIBUTION_PACKAGES`). Note that some dependencies are
 optional and depend on options passed to meson.
 

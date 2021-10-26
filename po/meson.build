@@ -5,7 +5,7 @@ i18n.gettext(
   preset: 'glib',
   # Page width is set to 90 characters in order to avoid bad wrapping of the
   # bug reporting address.
-  args: ['--msgid-bugs-address=https://gitlab.freedesktop.org/pipewire/pipewire-media-session/issues/new',
+  args: ['--msgid-bugs-address=https://gitlab.freedesktop.org/pipewire/media-session/issues/new',
          '--width=90'],
 )
 
