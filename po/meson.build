@@ -8,5 +8,3 @@ i18n.gettext(
   args: ['--msgid-bugs-address=https://gitlab.freedesktop.org/pipewire/media-session/issues/new',
          '--width=90'],
 )
-
-po_dir = meson.current_source_dir()
