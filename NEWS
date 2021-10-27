@@ -1,3 +1,11 @@
+# Media Session 0.4.1 (2021-10-27)
+
+Minor bugfix release functionally equivalent to the previous release.
+This release corrects a few leftovers pointing to the wrong repository and
+sets the minimum required PipeWire version. This way we fail early
+during meson setup rather than with linker errors during the build.
+
+
 # Media Session 0.4.0 (2021-10-21)
 
 This is the first standalone release of Media Session, previously part of the
