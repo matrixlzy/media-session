@@ -199,8 +199,6 @@ int sm_alsa_midi_start(struct sm_media_session *session)
 		goto cleanup;
 	}
 
-	sm_media_session_add_listener(session, &impl->listener, &session_events, impl);
-
 	if (check_access(impl)) {
 		res = do_create(impl);
 	} else {
@@ -208,6 +206,8 @@ int sm_alsa_midi_start(struct sm_media_session *session)
 	}
 	if (res < 0)
 		goto cleanup_props;
+
+	sm_media_session_add_listener(session, &impl->listener, &session_events, impl);
 
 	return 0;
 
