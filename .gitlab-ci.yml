@@ -172,6 +172,17 @@ build_on_fedora:
     matrix:
       - CC: [gcc, clang]
 
+build_docs:
+  extends:
+    - .build_on_fedora
+  artifacts:
+    name: media-session-$CI_COMMIT_SHA
+    paths:
+      - build-*/meson-logs
+      - prefix-*
+  variables:
+    MESON_OPTIONS: -Ddocs=enabled
+
 # A release build with NDEBUG, all options on auto() but tests explicitly
 # enabled. This should show issues with tests failing due to different
 # optimization or relying on assert.
@@ -264,3 +275,18 @@ doccheck:
       for page in $(cat media_session_pages); do
           git grep -q -e "\\\subpage $page" || (echo "\\page $page is missing \\subpage entry in doc/media-session.dox" && false)
       done
+
+pages:
+  extends:
+    - .build_on_fedora
+  stage: pages
+  dependencies:
+    - build_docs
+  script:
+    - mkdir public
+    - cp -R prefix-*/share/doc/media-session/html/* public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
