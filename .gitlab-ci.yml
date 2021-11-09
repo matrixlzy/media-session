@@ -278,7 +278,7 @@ doccheck:
 
 pages:
   extends:
-    - .build_on_fedora
+    - .not_coverity
   stage: pages
   dependencies:
     - build_docs
