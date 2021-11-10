@@ -4,9 +4,7 @@ systemd_system_services_dir = systemd.get_variable(pkgconfig: 'systemdsystemunit
 systemd_config = configuration_data()
 systemd_config.set('PW_MEDIA_SESSION_BINARY', media_session_bindir / 'pipewire-media-session')
 
-if get_option('session-managers').contains('media-session')
-  configure_file(input : 'pipewire-media-session.service.in',
-               output : 'pipewire-media-session.service',
-               configuration : systemd_config,
-               install_dir : systemd_system_services_dir)
-endif
+configure_file(input : 'pipewire-media-session.service.in',
+             output : 'pipewire-media-session.service',
+             configuration : systemd_config,
+             install_dir : systemd_system_services_dir)
