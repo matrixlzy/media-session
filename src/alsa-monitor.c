@@ -1219,7 +1219,7 @@ int sm_alsa_monitor_start(struct sm_media_session *session)
 	spa_list_init(&impl->device_list);
 	spa_device_add_listener(impl->monitor, &impl->listener, &alsa_udev_events, impl);
 
-	if (pw_properties_get_bool(impl->props, "alsa.jack-device", true)) {
+	if (pw_properties_get_bool(impl->props, "alsa.jack-device", false)) {
 		if ((res = alsa_start_jack_device(impl)) < 0)
 			goto out_free;
 	}
