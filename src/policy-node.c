@@ -1256,6 +1256,7 @@ static void refresh_auto_default_nodes(struct impl *impl)
 		struct node *node;
 		node = find_auto_default_node(impl, def);
 		if (node == NULL && def->value != NULL) {
+			free(def->value);
 			def->value = NULL;
 			pw_metadata_set_property(impl->session->metadata,
 					PW_ID_CORE, def->key, NULL, NULL);
