@@ -598,7 +598,7 @@ static void device_update(void *data)
 //	if (SPA_FLAG_IS_SET(device->device->obj.changed,
 //			SM_DEVICE_CHANGE_MASK_NODES |
 //			SM_DEVICE_CHANGE_MASK_PARAMS)) {
-		activate_device(device);
+	activate_device(device);
 //	}
 }
 
