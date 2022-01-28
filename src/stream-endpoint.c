@@ -169,6 +169,7 @@ static int stream_set_active(struct stream *stream, bool active)
 			default:
 				break;
 			}
+			break;
 		default:
 			break;
 		}
